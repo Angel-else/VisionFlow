@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         required: true,
 
     },
-    numero:{
+    motpasse:{
         type: String,
         required: true,
 
