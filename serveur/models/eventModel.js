@@ -11,7 +11,7 @@ const eventSchema = new mongoose.Schema({
     },
     heure: {
         type: String, 
-        required: true,
+        required: false,
     },
     lieu: {
         type: String,
@@ -23,7 +23,11 @@ const eventSchema = new mongoose.Schema({
     },
     prix: {
         type: Number,
-        required: true,
+        required: false,
+    },
+    nbre_de_places : {
+        type: Number ,
+        required: false,
     },
     id_user: {
         type: mongoose.Schema.Types.ObjectId,

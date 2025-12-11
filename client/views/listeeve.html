@@ -30,39 +30,46 @@
 
         <!-- Contenu Principal -->
         <div class="container">
-
         <div class="events-grid">
-            <!-- Card 1 -->
-            <div class="event-card">
-                <div class="event-title">Nom de l'évènement</div>
-                <div class="event-subtitle">Evenements sur la gestion de patrimoine</div>
+            <!-- Les événements seront injectés ici -->
 
-                <div class="event-section">
-                    <div class="section-label">Description</div>
-                    <div class="section-content">
-                        Cet évènements est organiser pour permettre un echange de conseils.
-                    </div>
-                </div>
-
-                <div class="event-section">
-                    <div class="section-label">Nombre de participants</div>
-                    <div class="section-content">20/30max</div>
-                </div>
-
-                <div class="event-meta">
-                    <div class="meta-item">
-                        <div class="section-label">Lieu</div>
-                        <div class="section-content">Mali</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="section-label">Date</div>
-                        <div class="section-content">22/10/2025</div>
-                    </div>
-                </div>
-
-                <button class="rejoin-btn">Modifier</button>
-            </div>
         </div>
     </div>
+    </div>
+    
+    <!-- Modal pour modification -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h2>Modifier l'événement</h2>
+        <form id="edit-form">
+            <div class="form-group">
+                <label for="edit-nom">Nom de l'événement</label>
+                <input type="text" id="edit-nom" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-description">Description</label>
+                <textarea id="edit-description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-lieu">Lieu</label>
+                <input type="text" id="edit-lieu" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-nbre_de_places">Nombre de places</label>
+                <input type="number" id="edit-nbre_de_places" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-date_debut">Date de début</label>
+                <input type="date" id="edit-date_debut" required>
+            </div>
+            <button type="submit">Enregistrer</button>
+        </form>
+    </div>
+</div>
+
+    
+<script src="../public/js/listeeve.js" type="module"></script>
+
 </body>
 </html>

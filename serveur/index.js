@@ -4,7 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import route from './routes/userRoute.js';
-import routEvent from './routes/eventRoute.js'
+import routEvent from './routes/eventRoute.js';
+import routeInsEvent from './routes/insEventRoute.js'
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 // Définition des routes
 app.use("/api", route);
 app.use("/api", routEvent);
+app.use("/api",routeInsEvent);
 
 const port = process.env.PORT || 7000;
 const mongourl = process.env.MONGO_URL;

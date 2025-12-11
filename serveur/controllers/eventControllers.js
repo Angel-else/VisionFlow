@@ -4,6 +4,12 @@ export const createEvent = async (req, res) => {
     try {
         console.log("Body reçu :", req.body);
 
+        const { nom_evenement, date_debut, lieu, description } = req.body;
+         // Vérifier que tous les champs sont présents
+        if (!nom_evenement || !date_debut || !lieu || !description) {
+            return res.status(400).json({ message: "Veuillez remplir tous les champs." });
+        }
+
         const newEvent = new Event(req.body);
         const saved = await newEvent.save();
 
@@ -69,5 +75,21 @@ export const deleteEvent = async(req,res) => {
         res.status(200).json({message: "evenement supprimer"});
     }catch (error) {
         res.status(500).json({errorMessage: error.message});
+    }
+};
+
+export const getEventsByUser = async (req, res) => {
+    try {
+        const id_user = req.params.id_user;
+
+        const events = await Event.find({ id_user });
+
+        if (!events || events.length === 0) {
+            return res.status(404).json({ message: "evenement non trouvés" });
+        }
+
+        res.status(200).json(events);
+    } catch (error) {
+        res.status(500).json({ errorMessage: error.message });
     }
 };

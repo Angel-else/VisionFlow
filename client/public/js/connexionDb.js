@@ -12,16 +12,20 @@ document.getElementById("loginFormC").addEventListener("submit", async function(
         });
 
         const data = await response.json();
+        console.log("Réponse serveur :", data);
 
-        // Vérifie directement le message renvoyé par le serveur
-        if (data.message === "Connexion réussie") {
-            // Stockage local (optionnel)
-            localStorage.setItem("user", JSON.stringify({
-        email: email
-    }));
+        // Vérifie le statut renvoyé par le serveur
+        if (data.status === "success") {
+
+            // Stocke le token
+            localStorage.setItem("token", data.token);
+
+            // Stocke les infos utilisateur (id, nom, email)
+            localStorage.setItem("user", JSON.stringify(data.user));
+            
 
             // Redirection
-            window.location.href = "listeeve.html";
+            window.location.href = "accueil.html";
         } else {
             document.getElementById("message").innerText = data.message || "Erreur lors de la connexion";
         }

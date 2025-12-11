@@ -43,24 +43,17 @@ export const auth = async (req, res) => {
     console.log("Requête reçue :", req.body);
 
     try {
-        if (!req.body || !req.body.email || !req.body.motpasse) {
-            return res.json({
-                status: "failed",
-                message: "Le corps de la requête est vide ou invalide"
-            });
-        }
+        const { email, motpasse } = req.body;
 
-        let { email, motpasse } = req.body;
-        email = email.trim();
-        motpasse = motpasse.trim();
-
+        // Vérification des champs
         if (!email || !motpasse) {
             return res.json({
                 status: "failed",
-                message: "Remplis tous les champs"
+                message: "Veuillez remplir tous les champs"
             });
         }
 
+        // Chercher l'utilisateur
         const user = await User.findOne({ email });
 
         if (!user) {
@@ -70,18 +63,34 @@ export const auth = async (req, res) => {
             });
         }
 
+        // Vérification du mot de passe
         const match = await bcrypt.compare(motpasse, user.motpasse);
 
-        if (match) {
-            return res.json({
-                message: "Connexion réussie",
-            });
-        } else {
+        if (!match) {
             return res.json({
                 status: "failed",
                 message: "Mot de passe incorrect"
             });
         }
+
+        // 🔥 Créer le token JWT contenant l'ID de l'utilisateur
+        const token = jwt.sign(
+            { id: user._id },           // données stockées dans le token
+            process.env.JWT_SECRET,     // clé secrète
+            { expiresIn: "7d" }         // expiration (7 jours)
+        );
+
+        // Réponse envoyée au frontend
+        return res.json({
+            status: "success",
+            message: "Connexion réussie",
+            token,
+            user: {
+                id: user._id,
+                nom: user.nom,
+                email: user.email
+            }
+        });
 
     } catch (err) {
         return res.json({
