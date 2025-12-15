@@ -31,7 +31,7 @@ app.use("/",routeFront)
 
 
 const port = process.env.PORT || 7000;
-const mongourl = process.env.MONGO_URL;
+const mongourl = process.env.MONGODB_ADDON_URI;
 
 mongoose
 .connect(mongourl)
