@@ -1,23 +1,20 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
 
-import route from './routes/userRoute.js';
-import routEvent from './routes/eventRoute.js';
-import routeInsEvent from './routes/insEventRoute.js';
-import routeFront from './routes/frontRoutes.js';
-
-import path from "path";
-import { fileURLToPath } from "url";
+const route = require('./routes/userRoute.js');
+const routEvent = require('./routes/eventRoute.js');
+const routeInsEvent = require('./routes/insEventRoute.js');
+const routeFront = require('./routes/frontRoutes.js');
 
 dotenv.config();
 
 const app = express();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "./../Client/public")));
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "./Client/public")));
 
 app.use(cors());
 app.use(express.json());
@@ -26,12 +23,11 @@ app.use(express.urlencoded({ extended: true }));
 // Définition des routes
 app.use("/api", route);
 app.use("/api", routEvent);
-app.use("/api",routeInsEvent);
-app.use("/",routeFront)
+app.use("/api", routeInsEvent);
+app.use("/", routeFront);
 
-
-const port = process.env.PORT || 7000;
-const mongourl = process.env.MONGODB_ADDON_URI;
+const port = process.env.PORT || 8080;
+const mongourl = process.env.MONGO_URL; // ⚠️ CHANGE ICI SEULEMENT !
 
 mongoose
 .connect(mongourl)
